@@ -60,19 +60,18 @@ public class MainActivity extends AppCompatActivity {
         for (final ImageButton img : diceList) {
             img.setActivated(true);
             img.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        if(img.isActivated()) {
-                            img.setActivated(false);
-                            img.setImageResource(R.drawable.save);
-                        }
-                        else{
-                            img.setActivated(true);
-                            img.setImageResource(R.drawable.blank);
-                        }
-
+                @Override
+                public void onClick(View v) {
+                    if(img.isActivated()) {
+                        img.setActivated(false);
+                        img.setImageResource(R.drawable.save);
                     }
-                });
+                    else{
+                        img.setActivated(true);
+                        img.setImageResource(R.drawable.blank);
+                    }
+                }
+            });
         }
 
         throwBtn.setOnClickListener(new View.OnClickListener() {
@@ -98,6 +97,12 @@ public class MainActivity extends AppCompatActivity {
                 turnScreen.setText("Turn score : " + turnScore);
                 game.rollTheDice();
                 saveBtn.setEnabled(false);
+            }
+        });
+        scoreBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(getApplicationContext(),"eliashej",Toast.LENGTH_SHORT).show();
             }
         });
         if(savedInstanceState!=null){
