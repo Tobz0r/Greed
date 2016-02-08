@@ -58,15 +58,16 @@ public class MainActivity extends AppCompatActivity {
         game = new Game(diceList);
 
         for (final ImageButton img : diceList) {
+            img.setActivated(true);
             img.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        if(img.isEnabled()) {
-                            img.setEnabled(false);
+                        if(img.isActivated()) {
+                            img.setActivated(false);
                             img.setImageResource(R.drawable.alright);
                         }
                         else{
-                            img.setEnabled(true);
+                            img.setActivated(true);
                             img.setImageResource(R.drawable.blank);
                         }
 
@@ -90,7 +91,7 @@ public class MainActivity extends AppCompatActivity {
                 gameScore += turnScore;
                 scoreScreen.setText("Score: " + gameScore);
                 for (ImageButton img : diceList) {
-                    img.setEnabled(true);
+                    img.setActivated(true);
                     img.setImageResource(R.drawable.blank);
                 }
                 turnScore = 0;

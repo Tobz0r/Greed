@@ -32,7 +32,7 @@ public class Game {
         Random rand = new Random();
 
         for(int i=0; i < nrOfDice; i++) {
-            if(diceList.get(i).isEnabled()) {
+            if(diceList.get(i).isActivated()) {
                 int dice = 1 + rand.nextInt((nrOfDieValues));
                 dices[i] = dice;
                 switch (dice) {
