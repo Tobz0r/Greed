@@ -1,7 +1,6 @@
 package com.tobz0r.greed;
 
-import android.os.Parcel;
-import android.os.Parcelable;
+
 import android.util.Log;
 import android.widget.ImageButton;
 
@@ -9,7 +8,8 @@ import java.util.List;
 import java.util.Random;
 
 /**
- * Created by Tobz0r on 2016-01-24.
+ * Gameclass containing all logic for the game.
+ * @author Tobias Estefors
  */
 public class Game {
 
@@ -25,7 +25,7 @@ public class Game {
     }
 
     /**
-     *
+     * Rolls each dice and adds the results to an array
      */
     public void rollTheDice(){
 
@@ -63,8 +63,8 @@ public class Game {
     }
 
     /**
-     *
-     * @return
+     * Calculates the score for this throw.
+     * @return the score based on what dies was thrown
      */
     public int getScore(){
         int retval;
@@ -84,8 +84,9 @@ public class Game {
     }
 
     /**
-     * @param dieValues
-     * @return
+     * Checks if throw contains a three of a kind
+     * @param dieValues array containing the throw
+     * @return Wich value who was a three of a kind
      */
     private int isThreeOfAKind( int dieValues[]) {
         for(int i = 0; i < nrOfDieValues; i++) {
@@ -97,8 +98,9 @@ public class Game {
     }
 
     /**
-     * @param dieValues
-     * @return
+     * Checks if throw was a straight
+     * @param dieValues array containing the throw
+     * @return true if a straight, else false
      */
     private boolean isStraight( int dieValues[]) {
         for(int i=0; i < nrOfDieValues; i++) {
