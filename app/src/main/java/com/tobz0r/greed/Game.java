@@ -1,5 +1,8 @@
 package com.tobz0r.greed;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+import android.util.Log;
 import android.widget.ImageButton;
 
 import java.util.List;
@@ -52,6 +55,7 @@ public class Game {
                         diceList.get(i).setBackgroundResource(R.drawable.white6);
                         break;
                     default:
+                        Log.e("Game", "Error while rolling");
                         break;
                 }
             }

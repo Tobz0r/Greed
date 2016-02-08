@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -22,21 +23,18 @@ public class MainActivity extends AppCompatActivity {
     private Game game;
     private List<ImageButton> diceList;
 
-
     private int gameScore, turnScore, turns;
+
+    private boolean clicked=false;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
-
         diceList = new ArrayList<>();
-
         scoreScreen = (TextView) findViewById(R.id.scoreScreen);
         turnScreen = (TextView) findViewById(R.id.turnScore);
-
         dice1 = (ImageButton) findViewById(R.id.dice1);
         diceList.add(dice1);
         dice2 = (ImageButton) findViewById(R.id.dice2);
@@ -56,45 +54,66 @@ public class MainActivity extends AppCompatActivity {
 
         gameScore = 0;
         turnScore = 0;
-        turns=0;
+        turns = 0;
         game = new Game(diceList);
 
-        for(final ImageButton img : diceList){
+        for (final ImageButton img : diceList) {
             img.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    img.setEnabled(false);
-                }
-            });
+                    @Override
+                    public void onClick(View v) {
+                        if(img.isEnabled()) {
+                            img.setEnabled(false);
+                            img.setImageResource(R.drawable.alright);
+                        }
+                        else{
+                            img.setEnabled(true);
+                            img.setImageResource(R.drawable.blank);
+                        }
+
+                    }
+                });
         }
 
         throwBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 game.rollTheDice();
-                turnScore=game.getScore();
-                turnScore= turnScore>=300 ? turnScore:0;
+                turnScore = game.getScore();
+                turnScore = turnScore >= 300 ? turnScore : 0;
                 turnScreen.setText("Turn score : " + turnScore);
                 saveBtn.setEnabled(true);
             }
         });
-
         saveBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                gameScore+=turnScore;
+                gameScore += turnScore;
                 scoreScreen.setText("Score: " + gameScore);
-                for(ImageButton img: diceList){
+                for (ImageButton img : diceList) {
                     img.setEnabled(true);
+                    img.setImageResource(R.drawable.blank);
                 }
-                turnScore=0;
+                turnScore = 0;
                 turnScreen.setText("Turn score : " + turnScore);
                 game.rollTheDice();
                 saveBtn.setEnabled(false);
             }
         });
+        if(savedInstanceState!=null){
+            gameScore=savedInstanceState.getInt("TotalScore");
+            turnScore=savedInstanceState.getInt("TurnScore");
+           // game=savedInstanceState.getParcelable("Game");
+            turnScreen.setText("Turn score : " + turnScore);
+            scoreScreen.setText("Score: " + gameScore);
+        }
+    }
 
-
+    @Override
+    public void onSaveInstanceState(Bundle savedInstanceState){
+        savedInstanceState.putInt("TurnScore",turnScore);
+        savedInstanceState.putInt("TotalScore",gameScore);
+      //  savedInstanceState.putParcelable("Game",game);
+        super.onSaveInstanceState(savedInstanceState);
     }
 
 
