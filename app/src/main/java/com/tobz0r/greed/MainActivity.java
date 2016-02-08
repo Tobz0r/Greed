@@ -64,7 +64,7 @@ public class MainActivity extends AppCompatActivity {
                     public void onClick(View v) {
                         if(img.isActivated()) {
                             img.setActivated(false);
-                            img.setImageResource(R.drawable.alright);
+                            img.setImageResource(R.drawable.save);
                         }
                         else{
                             img.setActivated(true);
