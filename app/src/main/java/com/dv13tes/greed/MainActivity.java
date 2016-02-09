@@ -1,15 +1,13 @@
-package com.tobz0r.greed;
+package com.dv13tes.greed;
 
-import android.net.Uri;
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
-import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
-
 
 
 import java.util.ArrayList;
@@ -24,8 +22,6 @@ public class MainActivity extends AppCompatActivity {
     private List<ImageButton> diceList;
 
     private int gameScore, turnScore, turns;
-
-    private boolean clicked=false;
 
 
     @Override
@@ -77,6 +73,7 @@ public class MainActivity extends AppCompatActivity {
         throwBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                turns++;
                 game.rollTheDice();
                 turnScore = game.getScore();
                 turnScore = turnScore >= 300 ? turnScore : 0;
@@ -89,6 +86,14 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View v) {
                 gameScore += turnScore;
                 scoreScreen.setText("Score: " + gameScore);
+                if(gameScore>=1000){
+                    Intent i=new Intent(getApplicationContext(),FinishActivity.class);
+                    Bundle save=new Bundle();
+                    save.putInt("Turns", turns);
+                    save.putInt("Score", gameScore);
+                    i.putExtras(save);
+                    startActivity(i);
+                }
                 for (ImageButton img : diceList) {
                     img.setActivated(true);
                     img.setImageResource(R.drawable.blank);
@@ -105,22 +110,24 @@ public class MainActivity extends AppCompatActivity {
                 Toast.makeText(getApplicationContext(),"eliashej",Toast.LENGTH_SHORT).show();
             }
         });
-        if(savedInstanceState!=null){
+     /*   if(savedInstanceState!=null){
             gameScore=savedInstanceState.getInt("TotalScore");
             turnScore=savedInstanceState.getInt("TurnScore");
            // game=savedInstanceState.getParcelable("Game");
             turnScreen.setText("Turn score : " + turnScore);
             scoreScreen.setText("Score: " + gameScore);
-        }
+        }*/
     }
 
-    @Override
+
+   /* @Override
     public void onSaveInstanceState(Bundle savedInstanceState){
         savedInstanceState.putInt("TurnScore",turnScore);
-        savedInstanceState.putInt("TotalScore",gameScore);
+        savedInstanceState.putInt("TotalScore", gameScore);
+
       //  savedInstanceState.putParcelable("Game",game);
         super.onSaveInstanceState(savedInstanceState);
-    }
+    }*/
 
 
 }

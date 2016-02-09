@@ -1,8 +1,10 @@
-package com.tobz0r.greed;
+package com.dv13tes.greed;
 
 
 import android.util.Log;
 import android.widget.ImageButton;
+
+import com.dv13tes.greed.R;
 
 import java.util.List;
 import java.util.Random;
@@ -19,10 +21,12 @@ public class Game {
 
     private int[] dices;
 
+
     public Game(List<ImageButton> diceList){
-        dices=new int[nrOfDice];
         this.diceList=diceList;
+        dices=new int[nrOfDice];
     }
+
 
     /**
      * Rolls each dice and adds the results to an array
@@ -67,7 +71,7 @@ public class Game {
      * @return the score based on what dies was thrown
      */
     public int getScore(){
-        int retval;
+        int retVal;
         int[] dieValues={0,0,0,0,0,0};
         for(int i = 0; i < nrOfDice; i++) {
             if(dices[i] != 0) {
@@ -77,8 +81,8 @@ public class Game {
         if(isStraight(dieValues)){
             return 1000;
         }
-        if((retval=isThreeOfAKind(dieValues))!=0){
-            return retval==1 ? 1000 : 100*retval;
+        if((retVal=isThreeOfAKind(dieValues))!=0){
+            return retVal==1 ? 1000 : 100*retVal;
         }
         return (100*dieValues[0])+(50*dieValues[4]);
     }
