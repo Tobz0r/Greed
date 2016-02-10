@@ -136,8 +136,6 @@ public class MainActivity extends AppCompatActivity {
         });
 
     }
-
-
     @Override
     public void onSaveInstanceState(Bundle savedInstanceState){
         savedInstanceState.putInt("TurnScore",turnScore);
@@ -146,6 +144,4 @@ public class MainActivity extends AppCompatActivity {
         savedInstanceState.putParcelable("Game", game);
         super.onSaveInstanceState(savedInstanceState);
     }
-
-
 }
