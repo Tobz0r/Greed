@@ -52,7 +52,7 @@
             android:layout_weight=".20"
             android:background="@drawable/white2"
             android:layout_alignTop="@+id/dice1"
-            android:layout_alignEnd="@+id/scoreBtn" />
+            android:layout_alignEnd="@+id/dice5" />
 
         <ImageButton
             android:layout_width="wrap_content"
@@ -95,21 +95,10 @@
             android:text="Save"
             android:layout_weight=".20"
             android:id="@+id/saveBtn"
-            android:layout_alignBaseline="@+id/throwBtn"
-            android:layout_alignBottom="@+id/throwBtn"
+            android:layout_alignParentBottom="true"
             android:layout_toStartOf="@+id/dice5" />
 
-        <Button
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Score"
-            android:layout_weight=".20"
-            android:id="@+id/scoreBtn"
-            android:layout_alignBaseline="@+id/throwBtn"
-            android:layout_alignBottom="@+id/throwBtn"
-            android:layout_alignEnd="@+id/dice5" />
-
-        <Button
+            <Button
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Throw"

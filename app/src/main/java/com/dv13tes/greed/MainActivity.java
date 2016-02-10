@@ -7,9 +7,6 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.TextView;
-import android.widget.Toast;
-
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -85,11 +82,8 @@ public class MainActivity extends AppCompatActivity {
             }
             game.setDiceList(diceList);
         }
-
-        scoreBtn = (Button) findViewById(R.id.scoreBtn);
         throwBtn = (Button) findViewById(R.id.throwBtn);
         saveBtn = (Button) findViewById(R.id.saveBtn);
-
 
         throwBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -128,13 +122,6 @@ public class MainActivity extends AppCompatActivity {
                 saveBtn.setEnabled(false);
             }
         });
-        scoreBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Toast.makeText(getApplicationContext(), "eliashej", Toast.LENGTH_SHORT).show();
-            }
-        });
-
     }
     @Override
     public void onSaveInstanceState(Bundle savedInstanceState){

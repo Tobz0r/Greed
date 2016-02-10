@@ -1,12 +1,9 @@
 package com.dv13tes.greed;
 
-
 import android.os.Parcel;
 import android.os.Parcelable;
 import android.util.Log;
 import android.widget.ImageButton;
-
-
 import java.util.List;
 import java.util.Random;
 
@@ -21,8 +18,6 @@ public class Game implements Parcelable {
     private List<ImageButton> diceList;
     private int mData;
     private int[] dices;
-
-
     public static final Parcelable.Creator<Game> CREATOR
             = new Parcelable.Creator<Game>() {
         public Game createFromParcel(Parcel in) {
@@ -33,8 +28,6 @@ public class Game implements Parcelable {
             return new Game[size];
         }
     };
-
-
     public Game(List<ImageButton> diceList){
         this.diceList=diceList;
         dices=new int[nrOfDice];
@@ -44,12 +37,10 @@ public class Game implements Parcelable {
         mData=in.readInt();
     }
 
-
     /**
      * Rolls each dice and adds the results to an array
      */
     public void rollTheDice(){
-
         Random rand = new Random();
 
         for(int i=0; i < nrOfDice; i++) {
@@ -82,8 +73,6 @@ public class Game implements Parcelable {
             }
         }
     }
-
-
     /**
      * Calculates the score for this throw.
      * @return the score based on what dies was thrown
@@ -104,7 +93,6 @@ public class Game implements Parcelable {
         }
         return (100*dieValues[0])+(50*dieValues[4]);
     }
-
     /**
      * Checks if throw contains a three of a kind
      * @param dieValues array containing the throw

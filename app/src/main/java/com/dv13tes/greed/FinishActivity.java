@@ -20,7 +20,6 @@ public class FinishActivity extends AppCompatActivity {
         playAgain=(Button) findViewById(R.id.playAgain);
         gzText = (TextView) findViewById(R.id.endText);
         turnText = (TextView) findViewById(R.id.turnText);
-
         Bundle extras = getIntent().getExtras();
 
         turnText.setText("You got "+ extras.getInt("Score") + " points in " +
