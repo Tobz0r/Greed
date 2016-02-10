@@ -79,10 +79,10 @@ public class MainActivity extends AppCompatActivity {
             List<ImageButton> tempList = game.getDiceList();
             for(int j=0; j < diceList.size();j++){
                 diceList.get(j).setBackground(tempList.get(j).getBackground());
+                diceList.get(j).setActivated(tempList.get(j).isActivated());
                 diceList.get(j).setImageResource(tempList.get(j).isActivated() ?
                                                R.drawable.blank : R.drawable.save);
             }
-
             game.setDiceList(diceList);
         }
 
@@ -122,6 +122,9 @@ public class MainActivity extends AppCompatActivity {
                 turnScore = 0;
                 turnScreen.setText("Turn score : " + turnScore);
                 game.rollTheDice();
+                turnScore = game.getScore();
+                turnScore = turnScore >= 300 ? turnScore : 0;
+                turnScreen.setText("Turn score : " + turnScore);
                 saveBtn.setEnabled(false);
             }
         });

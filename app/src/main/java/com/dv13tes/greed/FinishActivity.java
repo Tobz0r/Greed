@@ -23,10 +23,8 @@ public class FinishActivity extends AppCompatActivity {
 
         Bundle extras = getIntent().getExtras();
 
-        int score=extras.getInt("Score");
-        int turns=extras.getInt("Turns");
-
-        turnText.setText("You got "+ score + " points in " +turns+ " rounds!");
+        turnText.setText("You got "+ extras.getInt("Score") + " points in " +
+                extras.getInt("Turns")+ " rounds!");
 
         playAgain.setOnClickListener(new View.OnClickListener() {
             @Override
