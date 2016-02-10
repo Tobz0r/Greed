@@ -28,9 +28,11 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        diceList = new ArrayList<>();
         scoreScreen = (TextView) findViewById(R.id.scoreScreen);
         turnScreen = (TextView) findViewById(R.id.turnScore);
+
+        diceList = new ArrayList<>();
+
         dice1 = (ImageButton) findViewById(R.id.dice1);
         diceList.add(dice1);
         dice2 = (ImageButton) findViewById(R.id.dice2);
@@ -44,31 +46,50 @@ public class MainActivity extends AppCompatActivity {
         dice6 = (ImageButton) findViewById(R.id.dice6);
         diceList.add(dice6);
 
-        scoreBtn = (Button) findViewById(R.id.scoreBtn);
-        throwBtn = (Button) findViewById(R.id.throwBtn);
-        saveBtn = (Button) findViewById(R.id.saveBtn);
-
-        gameScore = 0;
-        turnScore = 0;
-        turns = 0;
-        game = new Game(diceList);
-
+        int i=0;
         for (final ImageButton img : diceList) {
             img.setActivated(true);
             img.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    if(img.isActivated()) {
+                    if (img.isActivated()) {
                         img.setActivated(false);
                         img.setImageResource(R.drawable.save);
-                    }
-                    else{
+                        img.setImageAlpha(127);
+                    } else {
                         img.setActivated(true);
                         img.setImageResource(R.drawable.blank);
+                        img.setImageAlpha(0);
                     }
                 }
             });
         }
+        gameScore = 0;
+        turnScore = 0;
+        turns = 0;
+        game = new Game(diceList);
+
+        if (savedInstanceState != null) {
+            gameScore = savedInstanceState.getInt("TotalScore");
+            turnScore = savedInstanceState.getInt("TurnScore");
+            turns= savedInstanceState.getInt("Turns");
+            game = savedInstanceState.getParcelable("Game");
+            turnScreen.setText("Turn score : " + turnScore);
+            scoreScreen.setText("Score: " + gameScore);
+            List<ImageButton> tempList = game.getDiceList();
+            for(int j=0; j < diceList.size();j++){
+                diceList.get(j).setBackground(tempList.get(j).getBackground());
+                diceList.get(j).setImageResource(tempList.get(j).isActivated() ?
+                                               R.drawable.blank : R.drawable.save);
+            }
+
+            game.setDiceList(diceList);
+        }
+
+        scoreBtn = (Button) findViewById(R.id.scoreBtn);
+        throwBtn = (Button) findViewById(R.id.throwBtn);
+        saveBtn = (Button) findViewById(R.id.saveBtn);
+
 
         throwBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -86,9 +107,9 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View v) {
                 gameScore += turnScore;
                 scoreScreen.setText("Score: " + gameScore);
-                if(gameScore>=1000){
-                    Intent i=new Intent(getApplicationContext(),FinishActivity.class);
-                    Bundle save=new Bundle();
+                if (gameScore >= 1000) {
+                    Intent i = new Intent(getApplicationContext(), FinishActivity.class);
+                    Bundle save = new Bundle();
                     save.putInt("Turns", turns);
                     save.putInt("Score", gameScore);
                     i.putExtras(save);
@@ -107,27 +128,21 @@ public class MainActivity extends AppCompatActivity {
         scoreBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(getApplicationContext(),"eliashej",Toast.LENGTH_SHORT).show();
+                Toast.makeText(getApplicationContext(), "eliashej", Toast.LENGTH_SHORT).show();
             }
         });
-     /*   if(savedInstanceState!=null){
-            gameScore=savedInstanceState.getInt("TotalScore");
-            turnScore=savedInstanceState.getInt("TurnScore");
-           // game=savedInstanceState.getParcelable("Game");
-            turnScreen.setText("Turn score : " + turnScore);
-            scoreScreen.setText("Score: " + gameScore);
-        }*/
+
     }
 
 
-   /* @Override
+    @Override
     public void onSaveInstanceState(Bundle savedInstanceState){
         savedInstanceState.putInt("TurnScore",turnScore);
         savedInstanceState.putInt("TotalScore", gameScore);
-
-      //  savedInstanceState.putParcelable("Game",game);
+        savedInstanceState.putInt("Turns", turns);
+        savedInstanceState.putParcelable("Game", game);
         super.onSaveInstanceState(savedInstanceState);
-    }*/
+    }
 
 
 }

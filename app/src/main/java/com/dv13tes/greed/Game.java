@@ -1,10 +1,11 @@
 package com.dv13tes.greed;
 
 
+import android.os.Parcel;
+import android.os.Parcelable;
 import android.util.Log;
 import android.widget.ImageButton;
 
-import com.dv13tes.greed.R;
 
 import java.util.List;
 import java.util.Random;
@@ -13,18 +14,34 @@ import java.util.Random;
  * Gameclass containing all logic for the game.
  * @author Tobias Estefors
  */
-public class Game {
+public class Game implements Parcelable {
 
     private final int nrOfDice=6;
     private final int nrOfDieValues=6;
     private List<ImageButton> diceList;
-
+    private int mData;
     private int[] dices;
+
+
+    public static final Parcelable.Creator<Game> CREATOR
+            = new Parcelable.Creator<Game>() {
+        public Game createFromParcel(Parcel in) {
+            return new Game(in);
+        }
+
+        public Game[] newArray(int size) {
+            return new Game[size];
+        }
+    };
 
 
     public Game(List<ImageButton> diceList){
         this.diceList=diceList;
         dices=new int[nrOfDice];
+    }
+
+    private Game(Parcel in){
+        mData=in.readInt();
     }
 
 
@@ -65,6 +82,7 @@ public class Game {
             }
         }
     }
+
 
     /**
      * Calculates the score for this throw.
@@ -113,5 +131,24 @@ public class Game {
             }
         }
         return true;
+    }
+
+    public List<ImageButton> getDiceList(){
+        return diceList;
+    }
+
+    public void setDiceList(List diceList){
+        this.diceList=diceList;
+    }
+
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+
     }
 }
