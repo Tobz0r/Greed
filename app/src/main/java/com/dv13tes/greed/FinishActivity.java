@@ -12,6 +12,11 @@ public class FinishActivity extends AppCompatActivity {
     TextView gzText, turnText;
     Button playAgain;
 
+    /**
+     * onCreate is going to be where i create the GUI because
+     * it will be shown when the activity is created
+     * @param savedInstanceState
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -28,10 +33,15 @@ public class FinishActivity extends AppCompatActivity {
         playAgain.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(getApplicationContext(),MainActivity.class));
+                startActivity(new Intent(getApplicationContext(),
+                        MainActivity.class));
             }
         });
     }
+    /**
+     * Called when the activity has detected the user's press of the back
+     * key.
+     */
     @Override
     public void onBackPressed() {
         startActivity(new Intent(getApplicationContext(),MainActivity.class));

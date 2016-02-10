@@ -14,7 +14,7 @@ public class MainActivity extends AppCompatActivity {
 
     private TextView scoreScreen, turnScreen;
     private ImageButton dice1, dice2, dice3, dice4, dice5, dice6;
-    private Button scoreBtn, throwBtn, saveBtn;
+    private Button  throwBtn, saveBtn;
     private Game game;
     private List<ImageButton> diceList;
 
@@ -43,7 +43,6 @@ public class MainActivity extends AppCompatActivity {
         dice6 = (ImageButton) findViewById(R.id.dice6);
         diceList.add(dice6);
 
-        int i=0;
         for (final ImageButton img : diceList) {
             img.setActivated(true);
             img.setOnClickListener(new View.OnClickListener() {
@@ -102,7 +101,8 @@ public class MainActivity extends AppCompatActivity {
                 gameScore += turnScore;
                 scoreScreen.setText("Score: " + gameScore);
                 if (gameScore >= 1000) {
-                    Intent i = new Intent(getApplicationContext(), FinishActivity.class);
+                    Intent i = new Intent(getApplicationContext(),
+                            FinishActivity.class);
                     Bundle save = new Bundle();
                     save.putInt("Turns", turns);
                     save.putInt("Score", gameScore);
