@@ -61,7 +61,7 @@ public class MainActivity extends AppCompatActivity {
                     if (img.isActivated()) {
                         img.setActivated(false);
                         img.setBackgroundColor(Color.GREEN);
-                        img.setImageAlpha(200);
+                        img.setImageAlpha(240);
                     } else {
                         img.setActivated(true);
                         img.setBackgroundColor(Color.WHITE);
@@ -159,7 +159,7 @@ public class MainActivity extends AppCompatActivity {
     private void activateButtons(){
         for (ImageButton img : diceList) {
             img.setActivated(true);
-            img.setImageAlpha(255);
+            img.setImageAlpha(240);
             img.setBackgroundColor(Color.WHITE);
 
         }

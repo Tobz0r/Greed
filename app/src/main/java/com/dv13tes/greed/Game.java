@@ -92,10 +92,10 @@ public class Game implements Parcelable {
         }
         if((retVal=isThreeOfAKind(dieValues,0))!=0){
             returnScore = retVal==1 ? 1000 : 100*retVal;
-            threeOne= retVal==1 ? 0: 1;
-            threeFive = retVal==5 ? 0: 1;
-
-
+            secondRetVal=isThreeOfAKind(dieValues,retVal);
+            returnScore += secondRetVal==1?1000:100*secondRetVal;
+            threeOne= retVal==1 || secondRetVal==1 ? 0 : 1;
+            threeFive = retVal==5 || secondRetVal==5? 0 : 1;
         }
         returnScore +=(((100*dieValues[0])*threeOne)+((50*dieValues[4])*threeFive));
         return returnScore;
@@ -107,7 +107,7 @@ public class Game implements Parcelable {
      */
     private int isThreeOfAKind( int dieValues[], int except) {
         for(int i = 0; i < nrOfDieValues; i++) {
-            if(3 <= dieValues[i] && (i+1!=except)) {
+            if(3 <= dieValues[i] && ((i+1)!=except)) {
                 return i+1;
             }
         }
@@ -129,16 +129,16 @@ public class Game implements Parcelable {
     }
 
     /**
-     *
-     * @return
+     * Returns a list of all dices
+     * @return a arraylist with imagebuttons
      */
     public List<ImageButton> getDiceList(){
         return diceList;
     }
 
     /**
-     *
-     * @param diceList
+     *  Adds a dicelist to the game
+     * @param diceList a list of dices
      */
     public void setDiceList(List diceList){
         this.diceList=diceList;
