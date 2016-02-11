@@ -7,6 +7,10 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
+/**
+ * Endscreen for greedgame, shows your score and gives
+ * option to play again
+ */
 public class FinishActivity extends AppCompatActivity {
 
     TextView gzText, turnText;

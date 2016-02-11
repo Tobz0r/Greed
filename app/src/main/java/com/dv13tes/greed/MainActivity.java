@@ -13,6 +13,11 @@ import android.widget.Toast;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Mainclass for greed game. Creates the user interface and
+ * adds logic to all buttons.
+ * @author Tobias Estefors
+ */
 public class MainActivity extends AppCompatActivity {
 
     private TextView scoreScreen, turnScreen;

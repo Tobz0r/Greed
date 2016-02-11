@@ -79,7 +79,7 @@ public class Game implements Parcelable {
      */
     public int getScore(){
         rollTheDice();
-        int retVal, threeOne=1, threeFive=1;
+        int retVal,secondRetVal, threeOne=1, threeFive=1;
         int returnScore=0;
         int[] dieValues={0,0,0,0,0,0};
         for(int i = 0; i < nrOfDice; i++) {
@@ -90,10 +90,12 @@ public class Game implements Parcelable {
         if(isStraight(dieValues)){
             return 1000;
         }
-        if((retVal=isThreeOfAKind(dieValues))!=0){
+        if((retVal=isThreeOfAKind(dieValues,0))!=0){
             returnScore = retVal==1 ? 1000 : 100*retVal;
             threeOne= retVal==1 ? 0: 1;
             threeFive = retVal==5 ? 0: 1;
+
+
         }
         returnScore +=(((100*dieValues[0])*threeOne)+((50*dieValues[4])*threeFive));
         return returnScore;
@@ -103,9 +105,9 @@ public class Game implements Parcelable {
      * @param dieValues array containing the throw
      * @return Wich value who was a three of a kind
      */
-    private int isThreeOfAKind( int dieValues[]) {
+    private int isThreeOfAKind( int dieValues[], int except) {
         for(int i = 0; i < nrOfDieValues; i++) {
-            if(3 <= dieValues[i]) {
+            if(3 <= dieValues[i] && (i+1!=except)) {
                 return i+1;
             }
         }
