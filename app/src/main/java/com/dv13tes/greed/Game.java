@@ -121,22 +121,38 @@ public class Game implements Parcelable {
         return true;
     }
 
+    /**
+     *
+     * @return
+     */
     public List<ImageButton> getDiceList(){
         return diceList;
     }
 
+    /**
+     *
+     * @param diceList
+     */
     public void setDiceList(List diceList){
         this.diceList=diceList;
     }
 
-
+    /**
+     *
+     * @return
+     */
     @Override
     public int describeContents() {
         return 0;
     }
 
+    /**
+     *
+     * @param dest
+     * @param flags
+     */
     @Override
     public void writeToParcel(Parcel dest, int flags) {
-
+        dest.writeInt(mData);
     }
 }
