@@ -1,6 +1,7 @@
 package com.dv13tes.greed;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -20,9 +21,9 @@ public class MainActivity extends AppCompatActivity {
     private Game game;
     private List<ImageButton> diceList;
 
-    private boolean first=true;
+    private boolean resetFlag =true;
 
-    private int gameScore, turnScore, turns, turnTurn;
+    private int gameScore=0, turnScore=0, turns=0, turnTurn=0, prevScore=0;
 
 
     @Override
@@ -54,22 +55,17 @@ public class MainActivity extends AppCompatActivity {
                 public void onClick(View v) {
                     if (img.isActivated()) {
                         img.setActivated(false);
-                        img.setImageResource(R.drawable.save);
-                        img.setImageAlpha(127);
+                        img.setBackgroundColor(Color.GREEN);
+                        img.setImageAlpha(200);
                     } else {
                         img.setActivated(true);
-                        img.setImageResource(R.drawable.blank);
-                        img.setImageAlpha(0);
+                        img.setBackgroundColor(Color.WHITE);
+                        img.setImageAlpha(255);
                     }
                 }
             });
         }
-        gameScore = 0;
-        turnScore = 0;
-        turns = 0;
-        turnTurn=0;
         game = new Game(diceList);
-
         if (savedInstanceState != null) {
             gameScore = savedInstanceState.getInt("TotalScore");
             turnScore = savedInstanceState.getInt("TurnScore");
@@ -93,61 +89,49 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                // to avoid cheating with locking dices from earlier throws
-                if(first) {
+                if(resetFlag){
                     activateButtons();
-                    first=false;
+                    resetFlag =false;
                 }
                 turnTurn++;
                 turns++;
-                game.rollTheDice();
                 turnScore = game.getScore();
-                if(turnTurn==1 && turnScore<300){
-                    Toast.makeText(getApplicationContext(), "Too low score\n Rerolling",
+                if((turnTurn==1 && turnScore<300)||(turnTurn>=2 && turnScore <= prevScore)){
+                    Toast.makeText(getApplicationContext(), "Too low score\n Reroll",
                             Toast.LENGTH_SHORT).show();
-                    game.rollTheDice();
-                    turnScore = game.getScore();
-                    turnTurn++;
-                }
-                if(turnTurn>=2 && turnScore == 0){
-                    Toast.makeText(getApplicationContext(), "No dices giving points\n Rerolling",
-                            Toast.LENGTH_SHORT).show();
-                    activateButtons();
-                    game.rollTheDice();
-                    turnScore = game.getScore();
+                    resetFlag =true;
+                    saveBtn.setEnabled(false);
+                    turnTurn=0;
+                }else{
+                    saveBtn.setEnabled(true);
                 }
                 turnScreen.setText("Turn score : " + turnScore);
-                turnScore = turnScore >= 300 ? turnScore : 0;
-                saveBtn.setEnabled(true);
+                prevScore=turnScore;
             }
+
         });
+        saveBtn.setEnabled(false);
         saveBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(turnScore>=300) {
-                    gameScore += turnScore;
-                    scoreScreen.setText("Score: " + gameScore);
-                    //end the game if you reach 10000 score
-                    if (gameScore >= 10000) {
-                        Intent i = new Intent(getApplicationContext(),
-                                FinishActivity.class);
-                        Bundle save = new Bundle();
-                        save.putInt("Turns", turns);
-                        save.putInt("Score", gameScore);
-                        i.putExtras(save);
-                        startActivity(i);
-                    }
-                    activateButtons();
-                    turnScore = 0;
-                    turnTurn = 0;
-                    turnScreen.setText("Turn score : " + turnScore);
-                    game.rollTheDice();
-                    turnScore = game.getScore();
-                    turnScreen.setText("Turn score : " + turnScore);
-                }else{
-                    Toast.makeText(getApplicationContext(), "Need 300 points to save",
-                            Toast.LENGTH_SHORT).show();
+                gameScore += turnScore;
+                scoreScreen.setText("Score: " + gameScore);
+                //end the game if you reach 10000 score
+                if (gameScore >= 10000) {
+                    Intent i = new Intent(getApplicationContext(),
+                            FinishActivity.class);
+                    Bundle save = new Bundle();
+                    save.putInt("Turns", turns);
+                    save.putInt("Score", gameScore);
+                    i.putExtras(save);
+                    startActivity(i);
                 }
-
+                activateButtons();
+                turnScore = 0;
+                turnTurn = 0;
+                turnScreen.setText("Turn score : " + turnScore);
+                resetFlag = true;
+                saveBtn.setEnabled(false);
             }
         });
     }
@@ -170,7 +154,9 @@ public class MainActivity extends AppCompatActivity {
     private void activateButtons(){
         for (ImageButton img : diceList) {
             img.setActivated(true);
-            img.setImageResource(R.drawable.blank);
+            img.setImageAlpha(255);
+            img.setBackgroundColor(Color.WHITE);
+
         }
     }
 }

@@ -27,6 +27,7 @@ public class FinishActivity extends AppCompatActivity {
         turnText = (TextView) findViewById(R.id.turnText);
         Bundle extras = getIntent().getExtras();
 
+        gzText.setText("Congratulations, you won!");
         turnText.setText("You got "+ extras.getInt("Score") + " points in " +
                 extras.getInt("Turns")+ " rounds!");
 

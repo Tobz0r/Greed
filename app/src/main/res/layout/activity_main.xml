@@ -41,53 +41,53 @@
             android:layout_height="wrap_content"
             android:layout_weight=".20"
             android:id="@+id/dice1"
-            android:background="@drawable/white1"
             android:layout_below="@+id/turnScore"
-            android:layout_alignEnd="@+id/dice4" />
+            android:layout_alignEnd="@+id/dice4"
+            android:src="@drawable/white1" />
 
         <ImageButton
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/dice2"
             android:layout_weight=".20"
-            android:background="@drawable/white2"
             android:layout_alignTop="@+id/dice1"
-            android:layout_alignEnd="@+id/dice5" />
+            android:layout_alignEnd="@+id/dice5"
+            android:src="@drawable/white2" />
 
         <ImageButton
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/dice3"
             android:layout_weight=".20"
-            android:background="@drawable/white3"
             android:layout_above="@+id/dice5"
-            android:layout_alignParentEnd="true" />
+            android:layout_alignParentEnd="true"
+            android:src="@drawable/white3" />
 
         <ImageButton
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/dice4"
             android:layout_weight=".20"
-            android:background="@drawable/white4"
             android:layout_below="@+id/dice1"
-            android:layout_alignParentStart="false" />
+            android:layout_alignParentStart="false"
+            android:src="@drawable/white3" />
 
         <ImageButton
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/dice5"
-            android:background="@drawable/white5"
             android:layout_below="@+id/dice1"
-            android:layout_centerHorizontal="true" />
+            android:layout_centerHorizontal="true"
+            android:src="@drawable/white5" />
 
         <ImageButton
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/dice6"
             android:layout_weight=".20"
-            android:background="@drawable/white6"
             android:layout_below="@+id/dice2"
-            android:layout_alignStart="@+id/dice3" />
+            android:layout_alignStart="@+id/dice3"
+            android:src="@drawable/white6" />
 
         <Button
             android:layout_width="wrap_content"

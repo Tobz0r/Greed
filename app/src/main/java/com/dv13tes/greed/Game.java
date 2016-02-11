@@ -40,7 +40,7 @@ public class Game implements Parcelable {
     /**
      * Rolls each dice and adds the results to an array
      */
-    public void rollTheDice(){
+    private void rollTheDice(){
         Random rand = new Random();
 
         for(int i=0; i < nrOfDice; i++) {
@@ -49,22 +49,22 @@ public class Game implements Parcelable {
                 dices[i] = dice;
                 switch (dice) {
                     case 1:
-                        diceList.get(i).setBackgroundResource(R.drawable.white1);
+                        diceList.get(i).setImageResource(R.drawable.white1);
                         break;
                     case 2:
-                        diceList.get(i).setBackgroundResource(R.drawable.white2);
+                        diceList.get(i).setImageResource(R.drawable.white2);
                         break;
                     case 3:
-                        diceList.get(i).setBackgroundResource(R.drawable.white3);
+                        diceList.get(i).setImageResource(R.drawable.white3);
                         break;
                     case 4:
-                        diceList.get(i).setBackgroundResource(R.drawable.white4);
+                        diceList.get(i).setImageResource(R.drawable.white4);
                         break;
                     case 5:
-                        diceList.get(i).setBackgroundResource(R.drawable.white5);
+                        diceList.get(i).setImageResource(R.drawable.white5);
                         break;
                     case 6:
-                        diceList.get(i).setBackgroundResource(R.drawable.white6);
+                        diceList.get(i).setImageResource(R.drawable.white6);
                         break;
                     default:
                         Log.e("Game", "Error while rolling");
@@ -78,7 +78,9 @@ public class Game implements Parcelable {
      * @return the score based on what dies was thrown
      */
     public int getScore(){
-        int retVal;
+        rollTheDice();
+        int retVal, threeOne=1, threeFive=1;
+        int returnScore=0;
         int[] dieValues={0,0,0,0,0,0};
         for(int i = 0; i < nrOfDice; i++) {
             if(dices[i] != 0) {
@@ -89,9 +91,12 @@ public class Game implements Parcelable {
             return 1000;
         }
         if((retVal=isThreeOfAKind(dieValues))!=0){
-            return retVal==1 ? 1000 : 100*retVal;
+            returnScore = retVal==1 ? 1000 : 100*retVal;
+            threeOne= retVal==1 ? 0: 1;
+            threeFive = retVal==5 ? 0: 1;
         }
-        return (100*dieValues[0])+(50*dieValues[4]);
+        returnScore +=(((100*dieValues[0])*threeOne)+((50*dieValues[4])*threeFive));
+        return returnScore;
     }
     /**
      * Checks if throw contains a three of a kind
