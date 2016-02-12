@@ -18,6 +18,7 @@ public class Game implements Parcelable {
     private List<ImageButton> diceList;
     private int mData;
     private int[] dices;
+    private int[] images;
     public static final Parcelable.Creator<Game> CREATOR
             = new Parcelable.Creator<Game>() {
         public Game createFromParcel(Parcel in) {
@@ -31,6 +32,12 @@ public class Game implements Parcelable {
     public Game(List<ImageButton> diceList){
         this.diceList=diceList;
         dices=new int[nrOfDice];
+        images=new int[]{R.drawable.white1,
+                R.drawable.white2,
+                R.drawable.white3,
+                R.drawable.white4,
+                R.drawable.white5,
+                R.drawable.white6};
     }
 
     private Game(Parcel in){
@@ -78,21 +85,27 @@ public class Game implements Parcelable {
                 switch (dice) {
                     case 1:
                         diceList.get(i).setImageResource(R.drawable.white1);
+                        images[i]=R.drawable.white1;
                         break;
                     case 2:
                         diceList.get(i).setImageResource(R.drawable.white2);
+                        images[i]=R.drawable.white2;
                         break;
                     case 3:
                         diceList.get(i).setImageResource(R.drawable.white3);
+                        images[i]=R.drawable.white3;
                         break;
                     case 4:
                         diceList.get(i).setImageResource(R.drawable.white4);
+                        images[i]=R.drawable.white4;
                         break;
                     case 5:
                         diceList.get(i).setImageResource(R.drawable.white5);
+                        images[i]=R.drawable.white5;
                         break;
                     case 6:
                         diceList.get(i).setImageResource(R.drawable.white6);
+                        images[i]=R.drawable.white6;
                         break;
                     default:
                         Log.e("Game", "Error while rolling");
@@ -130,6 +143,10 @@ public class Game implements Parcelable {
             }
         }
         return true;
+    }
+
+    public int[] getImages(){
+        return images;
     }
 
     /**

@@ -26,6 +26,8 @@ public class MainActivity extends AppCompatActivity {
     private Game game;
     private List<ImageButton> diceList;
 
+    private Color standard;
+
     private boolean resetFlag =true;
 
     private int gameScore=0, turnScore=0, turns=0, turnTurn=0, prevScore=0;
@@ -34,6 +36,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         setContentView(R.layout.activity_main);
         scoreScreen = (TextView) findViewById(R.id.scoreScreen);
         turnScreen = (TextView) findViewById(R.id.turnScore);
@@ -53,6 +56,7 @@ public class MainActivity extends AppCompatActivity {
         dice6 = (ImageButton) findViewById(R.id.dice6);
         diceList.add(dice6);
 
+
         for (final ImageButton img : diceList) {
             img.setActivated(true);
             img.setOnClickListener(new View.OnClickListener() {
@@ -61,11 +65,11 @@ public class MainActivity extends AppCompatActivity {
                     if (img.isActivated()) {
                         img.setActivated(false);
                         img.setBackgroundColor(Color.GREEN);
-                        img.setImageAlpha(255);
+                        // img.setImageAlpha(255);
                     } else {
                         img.setActivated(true);
                         img.setBackgroundColor(Color.WHITE);
-                        img.setImageAlpha(255);
+                      //  img.setImageAlpha(255);
                     }
                 }
             });
@@ -79,11 +83,13 @@ public class MainActivity extends AppCompatActivity {
             turnScreen.setText("Turn score : " + turnScore);
             scoreScreen.setText("Score: " + gameScore);
             List<ImageButton> tempList = game.getDiceList();
+            int[] images=game.getImages();
             for(int j=0; j < diceList.size();j++){
-                diceList.get(j).setBackground(tempList.get(j).getBackground());
                 diceList.get(j).setActivated(tempList.get(j).isActivated());
                 diceList.get(j).setBackgroundColor(tempList.get(j).isActivated() ?
-                                               Color.WHITE : Color.GREEN);
+                      Color.WHITE : Color.GREEN);
+                diceList.get(j).setImageResource(images[j]);
+
             }
             game.setDiceList(diceList);
         }
@@ -161,7 +167,7 @@ public class MainActivity extends AppCompatActivity {
     private void activateButtons(){
         for (ImageButton img : diceList) {
             img.setActivated(true);
-            img.setImageAlpha(240);
+            //img.setImageAlpha(255);
             img.setBackgroundColor(Color.WHITE);
 
         }
