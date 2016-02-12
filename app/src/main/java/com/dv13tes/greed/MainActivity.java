@@ -22,15 +22,13 @@ public class MainActivity extends AppCompatActivity {
 
     private TextView scoreScreen, turnScreen;
     private ImageButton dice1, dice2, dice3, dice4, dice5, dice6;
-    private Button  throwBtn, saveBtn;
+    private Button  throwBtn, saveBtn, turnBtn;
     private Game game;
     private List<ImageButton> diceList;
 
-    private Color standard;
-
     private boolean resetFlag =true;
 
-    private int gameScore=0, turnScore=0, turns=0, turnTurn=0, prevScore=0;
+    private int gameScore=0, turnScore=0, turns=0, turnTurn=0, prevScore=0, savedScore=0;
 
 
     @Override
@@ -95,6 +93,7 @@ public class MainActivity extends AppCompatActivity {
         }
         throwBtn = (Button) findViewById(R.id.throwBtn);
         saveBtn = (Button) findViewById(R.id.saveBtn);
+        turnBtn = (Button) findViewById(R.id.turnBtn);
 
         throwBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -105,19 +104,22 @@ public class MainActivity extends AppCompatActivity {
                     resetFlag =false;
                 }
                 turnTurn++;
-                turns++;
-                turnScore = game.getScore();
+                turnScore = game.getScore()+savedScore;
                 if((turnTurn==1 && turnScore<300)||(turnTurn>=2 && turnScore <= prevScore)){
                     Toast.makeText(getApplicationContext(), "Too low score\n Reroll",
                             Toast.LENGTH_SHORT).show();
                     resetFlag =true;
                     saveBtn.setEnabled(false);
                     turnTurn=0;
-                }else{
+                }else if(game.getDicesUsed()==6){
+                    turnBtn.setEnabled(true);
+                }
+                else{
                     saveBtn.setEnabled(true);
                 }
                 turnScreen.setText("Turn score : " + turnScore);
                 prevScore=turnScore;
+                savedScore=0;
             }
 
         });
@@ -126,6 +128,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 gameScore += turnScore;
+                turns++;
                 scoreScreen.setText("Score: " + gameScore);
                 //end the game if you reach 10000 score
                 if (gameScore >= 10000) {
@@ -140,9 +143,19 @@ public class MainActivity extends AppCompatActivity {
                 activateButtons();
                 turnScore = 0;
                 turnTurn = 0;
+                savedScore = 0;
                 turnScreen.setText("Turn score : " + turnScore);
                 resetFlag = true;
                 saveBtn.setEnabled(false);
+            }
+        });
+        turnBtn.setEnabled(false);
+        turnBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                savedScore = turnScore;
+                resetFlag = true;
+                turnBtn.setEnabled(false);
             }
         });
     }

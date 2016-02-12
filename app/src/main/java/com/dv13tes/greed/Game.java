@@ -13,8 +13,10 @@ import java.util.Random;
  */
 public class Game implements Parcelable {
 
+    private int dicesUsed;
     private final int nrOfDice=6;
     private final int nrOfDieValues=6;
+    private int[] dieValues;
     private List<ImageButton> diceList;
     private int mData;
     private int[] dices;
@@ -50,26 +52,30 @@ public class Game implements Parcelable {
      * @return the score based on what dies was thrown
      */
     public int getScore(){
+        dicesUsed=0;
         rollTheDice();
-        int retVal,secondRetVal, threeOne=1, threeFive=1;
+        int retVal,secondRetVal;
+        boolean threeOne=false,threeFive=false;
         int returnScore=0;
-        int[] dieValues={0,0,0,0,0,0};
+        dieValues= new int[]{0, 0, 0, 0, 0, 0};
         for(int i = 0; i < nrOfDice; i++) {
             if(dices[i] != 0) {
                 dieValues[dices[i]-1]++;
             }
         }
         if(isStraight(dieValues)){
+            dicesUsed=6;
             return 1000;
         }
         if((retVal=isThreeOfAKind(dieValues,0))!=0){
             returnScore = retVal==1 ? 1000 : 100*retVal;
             secondRetVal=isThreeOfAKind(dieValues,retVal);
             returnScore += secondRetVal==1?1000:100*secondRetVal;
-            threeOne= retVal==1 || secondRetVal==1 ? 0 : 1;
-            threeFive = retVal==5 || secondRetVal==5? 0 : 1;
+            threeOne= retVal==1 || secondRetVal==1 ? true : false;
+            threeFive = retVal==5 || secondRetVal==5? true : false;
+            dicesUsed=secondRetVal!=0 ? 6 : 3;
         }
-        returnScore +=(((100*dieValues[0])*threeOne)+((50*dieValues[4])*threeFive));
+        returnScore=calculateScore(threeOne, threeFive, returnScore);
         return returnScore;
     }
     /**
@@ -113,6 +119,46 @@ public class Game implements Parcelable {
                 }
             }
         }
+    }
+
+    /**
+     * Returns the number of dices giving points
+     * @return A number containing dice giving points
+     */
+    public int getDicesUsed(){
+        return dicesUsed;
+    }
+
+    /**
+     * Calculates score based on the number of three of a kinds
+     * @param threeOne true if three of a kind of ones
+     * @param threeFive true if three of a kind of fives
+     * @param returnScore the score to be returned
+     * @return the new score
+     */
+    private int calculateScore(boolean threeOne,boolean  threeFive, int returnScore){
+        if(threeOne){
+            if(!threeFive){
+                dicesUsed += dieValues[4];
+                returnScore += 50*dieValues[4];
+            }
+            returnScore += ((100*dieValues[0])-300);
+            dicesUsed += (dieValues[0]-3);
+        }else if(threeFive){
+            if(!threeOne){
+                dicesUsed += dieValues[0];
+                returnScore += 100*dieValues[0];
+            }
+            dicesUsed += dieValues[4]-3;
+            returnScore += (50*dieValues[4])-150;
+        }
+        else{
+            dicesUsed += dieValues[4];
+            dicesUsed += dieValues[0];
+            returnScore += 50*dieValues[4];
+            returnScore += 100*dieValues[0];
+        }
+        return returnScore;
     }
     /**
      * Checks if throw contains a three of a kind
