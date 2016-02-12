@@ -61,7 +61,7 @@ public class MainActivity extends AppCompatActivity {
                     if (img.isActivated()) {
                         img.setActivated(false);
                         img.setBackgroundColor(Color.GREEN);
-                        img.setImageAlpha(240);
+                        img.setImageAlpha(255);
                     } else {
                         img.setActivated(true);
                         img.setBackgroundColor(Color.WHITE);
@@ -82,8 +82,8 @@ public class MainActivity extends AppCompatActivity {
             for(int j=0; j < diceList.size();j++){
                 diceList.get(j).setBackground(tempList.get(j).getBackground());
                 diceList.get(j).setActivated(tempList.get(j).isActivated());
-                diceList.get(j).setImageResource(tempList.get(j).isActivated() ?
-                                               R.drawable.blank : R.drawable.save);
+                diceList.get(j).setBackgroundColor(tempList.get(j).isActivated() ?
+                                               Color.WHITE : Color.GREEN);
             }
             game.setDiceList(diceList);
         }
@@ -155,7 +155,9 @@ public class MainActivity extends AppCompatActivity {
         super.onSaveInstanceState(savedInstanceState);
     }
 
-
+    /**
+     * Unlocks all dices
+     */
     private void activateButtons(){
         for (ImageButton img : diceList) {
             img.setActivated(true);

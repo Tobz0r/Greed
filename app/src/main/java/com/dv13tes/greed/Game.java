@@ -37,6 +37,34 @@ public class Game implements Parcelable {
         mData=in.readInt();
     }
 
+
+    /**
+     * Calculates the score for this throw.
+     * @return the score based on what dies was thrown
+     */
+    public int getScore(){
+        rollTheDice();
+        int retVal,secondRetVal, threeOne=1, threeFive=1;
+        int returnScore=0;
+        int[] dieValues={0,0,0,0,0,0};
+        for(int i = 0; i < nrOfDice; i++) {
+            if(dices[i] != 0) {
+                dieValues[dices[i]-1]++;
+            }
+        }
+        if(isStraight(dieValues)){
+            return 1000;
+        }
+        if((retVal=isThreeOfAKind(dieValues,0))!=0){
+            returnScore = retVal==1 ? 1000 : 100*retVal;
+            secondRetVal=isThreeOfAKind(dieValues,retVal);
+            returnScore += secondRetVal==1?1000:100*secondRetVal;
+            threeOne= retVal==1 || secondRetVal==1 ? 0 : 1;
+            threeFive = retVal==5 || secondRetVal==5? 0 : 1;
+        }
+        returnScore +=(((100*dieValues[0])*threeOne)+((50*dieValues[4])*threeFive));
+        return returnScore;
+    }
     /**
      * Rolls each dice and adds the results to an array
      */
@@ -74,35 +102,11 @@ public class Game implements Parcelable {
         }
     }
     /**
-     * Calculates the score for this throw.
-     * @return the score based on what dies was thrown
-     */
-    public int getScore(){
-        rollTheDice();
-        int retVal,secondRetVal, threeOne=1, threeFive=1;
-        int returnScore=0;
-        int[] dieValues={0,0,0,0,0,0};
-        for(int i = 0; i < nrOfDice; i++) {
-            if(dices[i] != 0) {
-                dieValues[dices[i]-1]++;
-            }
-        }
-        if(isStraight(dieValues)){
-            return 1000;
-        }
-        if((retVal=isThreeOfAKind(dieValues,0))!=0){
-            returnScore = retVal==1 ? 1000 : 100*retVal;
-            secondRetVal=isThreeOfAKind(dieValues,retVal);
-            returnScore += secondRetVal==1?1000:100*secondRetVal;
-            threeOne= retVal==1 || secondRetVal==1 ? 0 : 1;
-            threeFive = retVal==5 || secondRetVal==5? 0 : 1;
-        }
-        returnScore +=(((100*dieValues[0])*threeOne)+((50*dieValues[4])*threeFive));
-        return returnScore;
-    }
-    /**
      * Checks if throw contains a three of a kind
      * @param dieValues array containing the throw
+     * @param except Value not to check for three of a kinds with.
+     *               Used if you want to find more than one three of a kind
+     *               <0 if you want all to be counted
      * @return Wich value who was a three of a kind
      */
     private int isThreeOfAKind( int dieValues[], int except) {
@@ -140,13 +144,16 @@ public class Game implements Parcelable {
      *  Adds a dicelist to the game
      * @param diceList a list of dices
      */
-    public void setDiceList(List diceList){
+    public void setDiceList(List<ImageButton> diceList){
         this.diceList=diceList;
     }
 
     /**
+     * Describe the kinds of special objects contained in this Parcelable's
+     * marshalled representation.
      *
-     * @return
+     * @return a bitmask indicating the set of special object types marshalled
+     * by the Parcelable.
      */
     @Override
     public int describeContents() {
@@ -154,9 +161,10 @@ public class Game implements Parcelable {
     }
 
     /**
+     * Flatten this object in to a Parcel.
      *
-     * @param dest
-     * @param flags
+     * @param dest The Parcel in which the object should be written.
+     * @param flags Additional flags about how the object should be written.
      */
     @Override
     public void writeToParcel(Parcel dest, int flags) {
