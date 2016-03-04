@@ -22,6 +22,7 @@ public class MainActivity extends AppCompatActivity {
 
     private TextView scoreScreen, turnScreen;
     private ImageButton dice1, dice2, dice3, dice4, dice5, dice6;
+
     private Button  throwBtn, saveBtn, turnBtn;
     private Game game;
     private List<ImageButton> diceList;
@@ -29,7 +30,7 @@ public class MainActivity extends AppCompatActivity {
     private boolean resetFlag =true;
 
     private int gameScore=0, turnScore=0, turns=0, turnTurn=0, prevScore=0, savedScore=0;
-
+    private final int victoryScore=1000;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -91,8 +92,8 @@ public class MainActivity extends AppCompatActivity {
             }
             game.setDiceList(diceList);
         }
-        throwBtn = (Button) findViewById(R.id.throwBtn);
-        saveBtn = (Button) findViewById(R.id.saveBtn);
+        throwBtn = (Button) findViewById(R.id.saveBtn);
+        saveBtn = (Button) findViewById(R.id.s);
         turnBtn = (Button) findViewById(R.id.turnBtn);
 
         throwBtn.setOnClickListener(new View.OnClickListener() {
@@ -105,7 +106,8 @@ public class MainActivity extends AppCompatActivity {
                 }
                 turnTurn++;
                 turnScore = game.getScore()+savedScore;
-                if((turnTurn==1 && turnScore<300)||(turnTurn>=2 && turnScore <= prevScore)){
+                //if((turnTurn==1 && turnScore<300)||(turnTurn>=2 && turnScore <= prevScore)){
+                if((turnTurn==1 && turnScore<300)|| !game.newThrowGivenPoints()){
                     Toast.makeText(getApplicationContext(), "Too low score\n Reroll",
                             Toast.LENGTH_SHORT).show();
                     resetFlag =true;
@@ -119,7 +121,7 @@ public class MainActivity extends AppCompatActivity {
                 }
                 turnScreen.setText("Turn score : " + turnScore);
                 prevScore=turnScore;
-                savedScore=0;
+                //savedScore=0;
             }
 
         });
@@ -131,7 +133,7 @@ public class MainActivity extends AppCompatActivity {
                 turns++;
                 scoreScreen.setText("Score: " + gameScore);
                 //end the game if you reach 10000 score
-                if (gameScore >= 10000) {
+                if (gameScore >= victoryScore) {
                     Intent i = new Intent(getApplicationContext(),
                             FinishActivity.class);
                     Bundle save = new Bundle();
@@ -139,6 +141,7 @@ public class MainActivity extends AppCompatActivity {
                     save.putInt("Score", gameScore);
                     i.putExtras(save);
                     startActivity(i);
+                    finish();
                 }
                 activateButtons();
                 turnScore = 0;
@@ -184,5 +187,14 @@ public class MainActivity extends AppCompatActivity {
             img.setBackgroundColor(Color.WHITE);
 
         }
+    }
+
+    /**
+     * If you press backbutton while at gamescreen you will
+     * end the app
+     */
+    @Override
+    public void onBackPressed(){
+        System.exit(0);
     }
 }

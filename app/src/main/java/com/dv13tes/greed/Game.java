@@ -4,6 +4,9 @@ import android.os.Parcel;
 import android.os.Parcelable;
 import android.util.Log;
 import android.widget.ImageButton;
+
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Random;
 
@@ -18,9 +21,12 @@ public class Game implements Parcelable {
     private final int nrOfDieValues=6;
     private int[] dieValues;
     private List<ImageButton> diceList;
+    private List<Integer> givenPoints;
+    private int threeOfAKindValue[];
     private int mData;
     private int[] dices;
     private int[] images;
+
     public static final Parcelable.Creator<Game> CREATOR
             = new Parcelable.Creator<Game>() {
         public Game createFromParcel(Parcel in) {
@@ -33,6 +39,8 @@ public class Game implements Parcelable {
     };
     public Game(List<ImageButton> diceList){
         this.diceList=diceList;
+        threeOfAKindValue=new int[2];
+        givenPoints=new ArrayList<>();
         dices=new int[nrOfDice];
         images=new int[]{R.drawable.white1,
                 R.drawable.white2,
@@ -40,6 +48,8 @@ public class Game implements Parcelable {
                 R.drawable.white4,
                 R.drawable.white5,
                 R.drawable.white6};
+
+
     }
 
     private Game(Parcel in){
@@ -52,8 +62,10 @@ public class Game implements Parcelable {
      * @return the score based on what dies was thrown
      */
     public int getScore(){
+        threeOfAKindValue= new int[]{0, 0};
         dicesUsed=0;
         rollTheDice();
+        Log.i("dieValues", Arrays.toString(dices));
         int retVal,secondRetVal;
         boolean threeOne=false,threeFive=false;
         int returnScore=0;
@@ -74,6 +86,7 @@ public class Game implements Parcelable {
             threeOne= retVal==1 || secondRetVal==1 ? true : false;
             threeFive = retVal==5 || secondRetVal==5? true : false;
             dicesUsed=secondRetVal!=0 ? 6 : 3;
+            threeOfAKindValue=new int[]{retVal,secondRetVal};
         }
         returnScore=calculateScore(threeOne, threeFive, returnScore);
         return returnScore;
@@ -83,11 +96,12 @@ public class Game implements Parcelable {
      */
     private void rollTheDice(){
         Random rand = new Random();
-
+        givenPoints.clear();
         for(int i=0; i < nrOfDice; i++) {
             if(diceList.get(i).isActivated()) {
                 int dice = 1 + rand.nextInt((nrOfDieValues));
                 dices[i] = dice;
+                givenPoints.add(i);
                 switch (dice) {
                     case 1:
                         diceList.get(i).setImageResource(R.drawable.white1);
@@ -127,6 +141,46 @@ public class Game implements Parcelable {
      */
     public int getDicesUsed(){
         return dicesUsed;
+    }
+
+    /**
+     * Tells the give if any dice in a new throw has given points
+     * It checks for any value a potential three of a kind has given
+     * and does not count overflowing three of a kind values(eg if four three's
+     * has been thrown it wont count the fourth as a pointgiving)
+     * Ones and fives will always give points either if their
+     * in a three of a kind or not.
+     * @return true if a new dice has given points, else false
+     */
+    public boolean newThrowGivenPoints(){
+
+        if(givenPoints.isEmpty()){
+            return false;
+        }
+        if(threeOfAKindValue[1]!=0){
+            return true;
+        }
+        boolean returnValue=false;
+        int threes=0;
+        if(threeOfAKindValue[0]!=0) {
+            if (dieValues[threeOfAKindValue[0] - 1] > 3) {
+                threes = dieValues[threeOfAKindValue[0] - 1] - 3;
+            }
+        }
+        for(int index: givenPoints){
+            if(dices[index]==threeOfAKindValue[0] && threes==0){
+                returnValue=true;
+                break;
+            }
+            else if(dices[index]==threeOfAKindValue[0] && threes>0){
+                threes--;
+            }
+            if(dices[index]==1 || dices[index]==5){
+                returnValue=true;
+                break;
+            }
+        }
+        return returnValue;
     }
 
     /**

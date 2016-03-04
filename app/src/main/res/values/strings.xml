@@ -1,3 +1,5 @@
 <resources>
-    <string name="app_name">Greed</string>
+    <string  name="app_name">Greed</string>
+    <string formatted="false"  name="end_message">You got %d points in %d rounds!</string>
+    <string name="gz_message">Congratulations, you won!</string>
 </resources>

@@ -26,29 +26,33 @@ public class FinishActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_finish);
 
-        playAgain=(Button) findViewById(R.id.playAgain);
-        gzText = (TextView) findViewById(R.id.endText);
-        turnText = (TextView) findViewById(R.id.turnText);
+        playAgain=(Button) findViewById(R.id.saveBtn);
+        gzText = (TextView) findViewById(R.id.turnScore);
+        turnText = (TextView) findViewById(R.id.scoreScreen);
         Bundle extras = getIntent().getExtras();
 
-        gzText.setText("Congratulations, you won!");
-        turnText.setText("You got "+ extras.getInt("Score") + " points in " +
-                extras.getInt("Turns")+ " rounds!");
+        gzText.setText(R.string.gz_message);
+        turnText.setText(String.format(getResources().getString(R.string.end_message),
+                extras.getInt("Score"), extras.getInt("Turns")));
+
 
         playAgain.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 startActivity(new Intent(getApplicationContext(),
                         MainActivity.class));
+                FinishActivity.this.finish();
             }
         });
     }
     /**
      * Called when the activity has detected the user's press of the back
-     * key.
+     * key. Starts a new game and end this acitivty
      */
     @Override
     public void onBackPressed() {
-        startActivity(new Intent(getApplicationContext(),MainActivity.class));
+        startActivity(new Intent(getApplicationContext(), MainActivity.class));
+        FinishActivity.this.finish();
+
     }
 }

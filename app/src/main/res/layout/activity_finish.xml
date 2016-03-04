@@ -14,7 +14,7 @@
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceLarge"
         android:text="GG! You won!"
-        android:id="@+id/endText"
+        android:id="@+id/turnScore"
         android:layout_alignParentTop="true"
         android:layout_alignParentStart="true" />
 
@@ -23,15 +23,15 @@
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceLarge"
         android:text="You got x points in y rounds!"
-        android:id="@+id/turnText"
-        android:layout_below="@+id/endText"
-        android:layout_alignStart="@+id/endText" />
+        android:id="@+id/scoreScreen"
+        android:layout_below="@+id/turnScore"
+        android:layout_alignStart="@+id/turnScore" />
 
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Play Again"
-        android:id="@+id/playAgain"
+        android:id="@+id/saveBtn"
         android:layout_centerVertical="true"
-        android:layout_alignStart="@+id/turnText" />
+        android:layout_alignStart="@+id/scoreScreen" />
 </RelativeLayout>
