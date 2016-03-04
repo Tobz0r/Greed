@@ -151,7 +151,6 @@ public class Game implements Parcelable {
      * @return true if a new dice has given points, else false
      */
     public boolean newThrowGivenPoints(){
-
         if(givenPoints.isEmpty()){
             return false;
         }

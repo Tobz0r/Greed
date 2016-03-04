@@ -30,7 +30,7 @@ public class MainActivity extends AppCompatActivity {
     private boolean resetFlag =true;
 
     private int gameScore=0, turnScore=0, turns=0, turnTurn=0, savedScore=0;
-    private final int victoryScore=1000;
+    private final int victoryScore=10000;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -78,6 +78,8 @@ public class MainActivity extends AppCompatActivity {
             gameScore = savedInstanceState.getInt("TotalScore");
             turnScore = savedInstanceState.getInt("TurnScore");
             turns= savedInstanceState.getInt("Turns");
+            turnTurn=savedInstanceState.getInt("TurnTurn");
+            savedScore=savedInstanceState.getInt("SavedScore");
             game = savedInstanceState.getParcelable("Game");
             turnScreen.setText("Turn score : " + turnScore);
             scoreScreen.setText("Score: " + gameScore);
@@ -123,7 +125,7 @@ public class MainActivity extends AppCompatActivity {
             }
 
         });
-        saveBtn.setEnabled(false);
+        saveBtn.setEnabled(true);
         saveBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -171,6 +173,8 @@ public class MainActivity extends AppCompatActivity {
         savedInstanceState.putInt("TurnScore",turnScore);
         savedInstanceState.putInt("TotalScore", gameScore);
         savedInstanceState.putInt("Turns", turns);
+        savedInstanceState.putInt("SavedScore", savedScore);
+        savedInstanceState.putInt("TurnTurn", turnTurn);
         savedInstanceState.putParcelable("Game", game);
         super.onSaveInstanceState(savedInstanceState);
     }
@@ -188,11 +192,13 @@ public class MainActivity extends AppCompatActivity {
     }
 
     /**
-     * If you press backbutton while at gamescreen you will
-     * end the app
+     * Makes the backbutton act as the homebutton
+     * while in-game
      */
     @Override
     public void onBackPressed(){
-        System.exit(0);
+        moveTaskToBack(true);
     }
+
+
 }

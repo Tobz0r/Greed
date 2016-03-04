@@ -94,7 +94,7 @@
                 android:layout_weight=".20"
                 android:id="@+id/saveBtn"
                 android:layout_alignTop="@+id/turnBtn"
-                android:layout_alignEnd="@+id/dice4" />
+                android:layout_toStartOf="@+id/dice2" />
 
             <Button
                 android:layout_width="wrap_content"
@@ -112,6 +112,6 @@
                 android:text="Save turn"
                 android:id="@+id/turnBtn"
                 android:layout_alignTop="@+id/throwBtn"
-                android:layout_toStartOf="@+id/throwBtn" />
+                android:layout_centerHorizontal="true" />
         </RelativeLayout>
     </LinearLayout>
