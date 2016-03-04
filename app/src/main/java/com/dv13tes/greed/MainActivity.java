@@ -29,7 +29,7 @@ public class MainActivity extends AppCompatActivity {
 
     private boolean resetFlag =true;
 
-    private int gameScore=0, turnScore=0, turns=0, turnTurn=0, prevScore=0, savedScore=0;
+    private int gameScore=0, turnScore=0, turns=0, turnTurn=0, savedScore=0;
     private final int victoryScore=1000;
 
     @Override
@@ -92,8 +92,8 @@ public class MainActivity extends AppCompatActivity {
             }
             game.setDiceList(diceList);
         }
-        throwBtn = (Button) findViewById(R.id.saveBtn);
-        saveBtn = (Button) findViewById(R.id.s);
+        throwBtn = (Button) findViewById(R.id.throwBtn);
+        saveBtn = (Button) findViewById(R.id.saveBtn);
         turnBtn = (Button) findViewById(R.id.turnBtn);
 
         throwBtn.setOnClickListener(new View.OnClickListener() {
@@ -106,7 +106,6 @@ public class MainActivity extends AppCompatActivity {
                 }
                 turnTurn++;
                 turnScore = game.getScore()+savedScore;
-                //if((turnTurn==1 && turnScore<300)||(turnTurn>=2 && turnScore <= prevScore)){
                 if((turnTurn==1 && turnScore<300)|| !game.newThrowGivenPoints()){
                     Toast.makeText(getApplicationContext(), "Too low score\n Reroll",
                             Toast.LENGTH_SHORT).show();
@@ -120,8 +119,7 @@ public class MainActivity extends AppCompatActivity {
                     saveBtn.setEnabled(true);
                 }
                 turnScreen.setText("Turn score : " + turnScore);
-                prevScore=turnScore;
-                //savedScore=0;
+
             }
 
         });
@@ -156,7 +154,7 @@ public class MainActivity extends AppCompatActivity {
         turnBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                savedScore = turnScore;
+                savedScore += turnScore;
                 resetFlag = true;
                 turnBtn.setEnabled(false);
             }

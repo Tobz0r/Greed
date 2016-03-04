@@ -1,12 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/ScrollView01"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context="com.dv13tes.greed.MainActivity">
 
+
+    <LinearLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:id="@+id/ScrollView01"
+        tools:context="com.dv13tes.greed.MainActivity">
         <RelativeLayout
             android:id="@+id/RelativeLayout"
             android:layout_width="match_parent"
@@ -67,7 +68,7 @@
                 android:layout_weight=".20"
                 android:layout_below="@+id/dice1"
                 android:layout_alignParentStart="false"
-                android:src="@drawable/white3" />
+                android:src="@drawable/white4" />
 
             <ImageButton
                 android:layout_width="wrap_content"
@@ -91,16 +92,16 @@
                 android:layout_height="wrap_content"
                 android:text="Save"
                 android:layout_weight=".20"
-                android:id="@+id/s"
+                android:id="@+id/saveBtn"
                 android:layout_alignTop="@+id/turnBtn"
-                android:layout_toStartOf="@+id/dice5" />
+                android:layout_alignEnd="@+id/dice4" />
 
             <Button
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Throw"
                 android:layout_weight=".20"
-                android:id="@+id/saveBtn"
+                android:id="@+id/throwBtn"
                 android:layout_below="@+id/dice6"
                 android:layout_toEndOf="@+id/dice2"
                 android:layout_marginTop="25dp" />
@@ -110,7 +111,7 @@
                 android:layout_height="wrap_content"
                 android:text="Save turn"
                 android:id="@+id/turnBtn"
-                android:layout_alignTop="@+id/saveBtn"
-                android:layout_centerHorizontal="true" />
+                android:layout_alignTop="@+id/throwBtn"
+                android:layout_toStartOf="@+id/throwBtn" />
         </RelativeLayout>
     </LinearLayout>

@@ -48,8 +48,6 @@ public class Game implements Parcelable {
                 R.drawable.white4,
                 R.drawable.white5,
                 R.drawable.white6};
-
-
     }
 
     private Game(Parcel in){
